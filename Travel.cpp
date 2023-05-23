@@ -1,4 +1,4 @@
-#include "Travel.h"
+ #include "Travel.h"
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -19,9 +19,37 @@ void Travel::mainMenu(Travel t)
 /******************************************************************************/
 void Travel::shortestpath()
 {
-    //start stop end
+    matrix();
+    int temp1, temp2, temp3, temp4, temp5, temp6, one, two, total;
     
     cout << endl << "Shortest path function working" << endl;
+    
+    cout << "start1 " << start<< " end " << end << " stop " << stop << endl;
+    temp1 = temp[start - 1].distance[end-1];
+    temp2 = temp[start - 1].distance[stop-1];
+    temp5 = temp[end - 1].distance[stop - 1];
+    temp6 = temp[stop - 1].distance[end - 1];
+    if (temp1 < temp2)
+    {
+        temp3 = end - 1;
+        temp4 = stop - 1;
+        one = temp1;
+        two = temp5;
+    }
+    else if (temp1 > temp2)
+    {
+        temp3 = stop - 1;
+        temp4 = end - 1;
+        one = temp2;
+        two = temp6;
+    }
+    total = one + two;
+    
+    cout << "Shortest Path:\n" << setw(8) << temp[start - 1].city
+         << " => " << temp[temp3].city << " => " << temp[temp4].city 
+         << endl << setw(12) << one << setw(10) << two << setw(11)
+         << "= " << total << " Mi" << endl;
+    
 }
 /******************************************************************************/
 /******************************************************************************/
@@ -36,11 +64,11 @@ void Travel::adjacency()
         if (index == 0 || index == 2)
         {
             cout << setw(8) << "=> " << temp[index].city 
-                 << "\t" << temp[index].distance << " Mi"<< endl;
+                 << "\t" << temp[start - 1].distance[index] << " Mi"<< endl;
         }
         else
             cout << setw(8) << "=> " << temp[index].city 
-                 << "\t\t" << temp[index].distance << " Mi"<< endl;
+                 << "\t\t" << temp[start - 1].distance[index] << " Mi"<< endl;
     }
     
     cout << endl;
@@ -65,36 +93,36 @@ void Travel::matrix()
     
     if (start == 1)
     {
-        temp[0].distance = 0;
-        temp[1].distance = 24;
-        temp[2].distance = 16;
-        temp[3].distance = 33;
+        temp[0].distance[0] = 0;
+        temp[0].distance[1] = 24;
+        temp[0].distance[2] = 16;
+        temp[0].distance[3] = 33;
     }
     else if (start == 2)
     {
-        temp[0].distance = 24;
-        temp[1].distance = 0;
-        temp[2].distance = 18;
-        temp[3].distance = 30;
+        temp[1].distance[0] = 24;
+        temp[1].distance[1] = 0;
+        temp[1].distance[2] = 18;
+        temp[1].distance[3] = 30;
     }
     else if (start == 3)
     {
-        temp[0].distance = 16;
-        temp[1].distance = 18;
-        temp[2].distance = 0;
-        temp[3].distance = 26;
+        temp[2].distance[0] = 16;
+        temp[2].distance[1] = 18;
+        temp[2].distance[2] = 0;
+        temp[2].distance[3] = 26;
     }
     else if (start == 4)
     {
-        temp[0].distance = 33;
-        temp[1].distance = 30;
-        temp[2].distance = 26;
-        temp[3].distance = 0;
+        temp[3].distance[0] = 33;
+        temp[3].distance[1] = 30;
+        temp[3].distance[2] = 26;
+        temp[3].distance[3] = 0;
     }
     if (selection == 'D')
     {
         for (int i = 0; i < 4; i++)
-            cout<<"("<<start<<", "<<temp[i].end<<", "<<temp[i].distance<<")\n";
+            cout<<"("<<start<<", "<<temp[i].end<<", "<<temp[start - 1].distance[i]<<")\n";
     }
 }
 /******************************************************************************/
